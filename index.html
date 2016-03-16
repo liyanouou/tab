@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tab</title>
+	<style type="text/css" rel="stylesheet">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	body{
+		font-size:62.5%;
+	}
+	ul{
+		list-style:none;
+	}
+	a{
+		text-decoration: none;
+	}
+	.notice{
+		margin:100px auto;
+		width:318px;
+		height:140px;
+		border:1px solid #dedede;
+		position: relative;
+	}
+	.notice-top{
+		position: absolute;
+		width:400px;
+		left:-1px;
+		top:-1px;
+	}
+	.notice-top li{
+		display: block;
+		float:left;
+		width:50px;
+		padding-left:6px;
+		padding-right: 6px;
+		line-height: 28px;
+		border:1px solid #dedede;
+		border-bottom: none;
+		background: #dedede;
+		text-align: center;
+		font-size:1.5em;
+	}
+	.notice-top li a{
+		color:#000;
+	}
+	.notice-top .select{
+		background: #fff;
+		border-top-color:#a4a4a4;
+		border-bottom-color:#fff;
+		font-weight: bold;
+	}
+	.notice-content{
+		position: absolute;
+		top:30px;
+		width:400px;
+		padding:12px 30px;
+	}
+	
+	.notice-content ul{
+		display: none;
+	}
+
+	.notice-content .show{
+		display: block;
+	}
+	.notice-content span{
+		display:inline-block; 
+		width:17px;
+		height:17px;
+		background:#ddd;
+		margin-right:10px;
+		font-size:1em;
+		line-height:17px;
+		text-align: center;
+		vertical-align: middle;
+		color:#444;
+	}
+
+
+	.notice-content a{
+		height:22px;
+		display: inline-block;
+		/*line-height: 22px;*/
+		font-size: 1.4em;
+		color:#004276;
+		vertical-align: middle;
+	}
+
+	.notice-content a:hover{
+		text-decoration: underline;
+		color:red;
+	}
+	
+	</style>
+	<script type="text/javascript">
+	function getByClassName(oParent,className){
+		var oChilds = oParent.getElementsByTagName("*");
+		var childsArr = [];
+		for(var i=0;i<oChilds.length;i++){
+			if(oChilds[i].className.indexOf(className) != -1){
+				childsArr.push(oChilds[i]);
+			}
+		}
+		return childsArr;
+	}
+	
+	window.onload = function(){
+		var oNotice = document.getElementById("notice"),
+			oLists = getByClassName(oNotice,'notice-top')[0].getElementsByTagName("li"),
+			oContents = getByClassName(oNotice,'notice-content')[0].getElementsByTagName("ul"),
+			i,
+			timer=null,
+			curIndex = 0,
+			nextIndex = 0;
+			interval = null;
+
+		autoplay();
+
+		for(i=0;i<oLists.length;i++){
+			oLists[i].id = ''+i;
+			oLists[i].onmouseover = function(){
+				clearInterval(interval);
+				var obj = this;
+				if(obj.className == 'select'){
+					return;
+				}
+				else{
+					if(timer){
+						clearTimeout(timer);
+						timer = null;
+					}
+					else{
+						timer = setTimeout(function(){
+							getByClassName(oNotice,"select")[0].className = "";
+							obj.className = "select";
+							var flag = obj.id;
+							getByClassName(oNotice,"show")[0].className = "";
+							oContents[flag].className = "show";
+							curIndex = +flag;
+						},100);
+					}
+				}
+			}
+
+			oLists[i].onmouseout = function(){
+				autoplay();
+			}
+		}
+
+		function autoplay(){
+			interval = setInterval(function(){
+				nextIndex = (curIndex == 4 ? 0 : (curIndex+1));
+				oLists[curIndex].className = "";
+				oLists[nextIndex].className = "select";
+				oContents[curIndex].className = "";
+				oContents[nextIndex].className = "show";
+				curIndex = nextIndex;
+			},3000);
+		}
+	}
+
+
+	</script>
+	</head>
+<body>
+	<div class="notice" id="notice">
+		<div class="notice-top">
+			<ul>
+				<li class="select">
+					<a href="#">数码</a>
+				</li>
+				<li class="">
+					<a href="#">科技</a>
+				</li>
+				<li class="">
+					<a href="#">房产</a>
+				</li>
+				<li class="">
+					<a href="#">娱乐</a>
+				</li>
+				<li class="">
+					<a href="#">投资</a>
+				</li>
+			</ul>
+		</div>
+		<div class="notice-content">
+			<ul class="show">
+				<li>
+					<span>1</span>
+					<a href="#">iPhone 6s Plus到底该买吗？</a>
+				</li>
+				<li>
+					<span>2</span>
+					<a href="#">锤子T2配置再曝光 骁龙820或泡汤</a>
+				</li>
+				<li>
+					<span>3</span>
+					<a href="#">解密：为何厂商青睐骁龙处理器</a>
+				</li>
+				<li>
+					<span>4</span>
+					<a href="#">Lumia 950 XL拍照初评：干掉安卓</a>
+				</li>
+			</ul>
+			<ul class="">
+				<li>
+					<span>1</span>
+					<a href="#">巨人网络欲借壳世纪游轮回归A股</a>
+				</li>
+				<li>
+					<span>2</span>
+					<a href="#">傍上阿里汇通更名百世快递</a>
+				</li>
+				<li>
+					<span>3</span>
+					<a href="#">微软Surface Book现开放预订</a>
+				</li>
+				<li>
+					<span>4</span>
+					<a href="#">黑莓表示明年手机不盈利就放弃</a>
+				</li>
+			</ul>
+			<ul class="">
+				<li>
+					<span>1</span>
+					<a href="#">现在该不该买房?</a>
+				</li>
+				<li>
+					<span>2</span>
+					<a href="#">锤子T2配置再曝光 骁龙820或泡汤</a>
+				</li>
+				<li>
+					<span>3</span>
+					<a href="#">解密：为何厂商青睐骁龙处理器</a>
+				</li>
+				<li>
+					<span>4</span>
+					<a href="#">Lumia 950 XL拍照初评：干掉安卓</a>
+				</li>
+			</ul>
+			<ul class="">
+				<li>
+					<span>1</span>
+					<a href="#">黄晓明和baby这场婚礼下了一盘棋</a>
+				</li>
+				<li>
+					<span>2</span>
+					<a href="#">香港有场婚礼请了另一半娱乐圈！</a>
+				</li>
+				<li>
+					<span>3</span>
+					<a href="#">他们曾经是台湾的模范夫妻</a>
+				</li>
+				<li>
+					<span>4</span>
+					<a href="#">徐静蕾穿短裤豪放蹲地</a>
+				</li>
+			</ul>
+			<ul class="">
+				<li>
+					<span>1</span>
+					<a href="#">黄晓明和baby这场婚礼下了一盘棋</a>
+				</li>
+				<li>
+					<span>2</span>
+					<a href="#">香港有场婚礼请了另一半娱乐圈！</a>
+				</li>
+				<li>
+					<span>3</span>
+					<a href="#">他们曾经是台湾的模范夫妻</a>
+				</li>
+				<li>
+					<span>4</span>
+					<a href="#">徐静蕾穿短裤豪放蹲地</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
+
